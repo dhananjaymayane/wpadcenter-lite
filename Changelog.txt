@@ -1,0 +1,11 @@
+Version 1.1 (1st October 2016)
+* WP-Adcenter Lite is now compatible with WordPress 4.6.1
+
+Version 1.1 (17th April 2016)
+* WP-Adcenter Lite is now compatible with WordPress 4.5
+
+Version 1.0 (13th Aug 2015)
+* WP-Adcenter Lite Initial Version
+
+
+		 
