@@ -1,7 +1,7 @@
 <style type="text/css">#ui-datepicker-div { display: none}</style>
 	<div class="wpa-section wpa-shadow wpa-spacing-top">
 	<div class="wpa-logo-section clearfix">
-		<span class="left"><img src="<?php echo plugins_url('images/logo.gif',__FILE__);?>" width="203" height="58" alt="wp adcenter" /></span>
+		<span class="left"><img src="<?php echo WP_ADCENTER_ADMIN_URL.'images/logo.gif';?>" width="203" height="58" alt="wp adcenter" /></span>
 		<h2>Statistics</h2>	
 	</div>
 

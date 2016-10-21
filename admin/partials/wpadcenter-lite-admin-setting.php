@@ -1,7 +1,7 @@
 <div class="wpa-section wpa-shadow wpa-spacing-top">
 <div style="line-height: 2.4em;">
 <a href="http://club.wpeka.com/product/wpadcenter" target="_blank">
-<img src="<?php echo plugins_url('/images/AdCenter.png',__FILE__); ?>">
+<img src="<?php echo WP_ADCENTER_ADMIN_URL.'/images/AdCenter.png'; ?>">
 </a>
 </div>
 
@@ -9,7 +9,7 @@
 </div>	<div style="clear:both;"></div>
 
 	<div class="wpa-logo-section clearfix">
-		<span class="left"><img src="<?php echo plugins_url('images/logo.gif',__FILE__);?>" width="203" height="58" alt="wp adcenter" /></span>
+		<span class="left"><img src="<?php echo WP_ADCENTER_ADMIN_URL.'images/logo.gif';?>" width="203" height="58" alt="wp adcenter" /></span>
 		<h2>Settings</h2>
 	</div>
 	

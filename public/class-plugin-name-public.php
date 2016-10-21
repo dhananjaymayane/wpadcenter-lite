@@ -20,7 +20,7 @@
  * @subpackage Plugin_Name/public
  * @author     Your Name <email@example.com>
  */
-class Plugin_Name_Public {
+class WPAdcenter_Lite_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -29,7 +29,7 @@ class Plugin_Name_Public {
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private $plugin_name;
+	private $wpadcenter_lite;
 
 	/**
 	 * The version of this plugin.

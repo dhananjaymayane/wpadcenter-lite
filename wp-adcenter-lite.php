@@ -1,7 +1,7 @@
 <?php 
 /**
 Plugin Name: WP AdCenter Lite
-Version: 1.1
+Version: 1.2
 Plugin URI: http://wpadcenter.com
 Description: Advertising management plugin for WordPress
 Author:  WPEka Team
@@ -10,18 +10,22 @@ Author URI: http://club.wpeka.com
 
 //	**** Require functions and display zone files ****//
 define( 'WP_ADCENTER_LITE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-
+define( 'WP_ADCENTER_PUBLIC_DIR', WP_ADCENTER_LITE_PLUGIN_DIR.'public/' );
+define( 'WP_ADCENTER_ADMIN_DIR', WP_ADCENTER_LITE_PLUGIN_DIR.'admin/' );
+define( 'WP_ADCENTER_LITE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'WP_ADCENTER_PUBLIC_URL', WP_ADCENTER_LITE_PLUGIN_URL.'public/' );
+define( 'WP_ADCENTER_ADMIN_URL', WP_ADCENTER_LITE_PLUGIN_URL.'admin/' );
 $pluginUrl = WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__));
 
-require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'ajax.php');
+require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'includes/wpadcenter-lite-ajax.php');
 
 function wpadl_menu_function()
 {
 	// Create Menu
 	/*	Register and Enqueue Styles/Scripts	*/
-   	wp_register_style($handle = 'admin', $src = plugins_url('admin/css/admin.css', __FILE__), $deps = array(), $ver = '1.0.0', $media = 'all');
-	wp_register_style($handle = 'tooltip', $src = plugins_url('admin/css/tooltips.css', __FILE__), $deps = array(), $ver = '1.0.0', $media = 'all');
-	wp_register_style( 'datepicker-css', plugins_url('admin/css/ui-lightness/datepicker.css',__FILE__), '1.0.0' );
+   	wp_register_style('admin', WP_ADCENTER_ADMIN_URL.'css/wpadcenter-lite-admin.css', $deps = array(), $ver = '1.0.0', $media = 'all');
+	wp_register_style('tooltip', WP_ADCENTER_PUBLIC_URL.'css/tooltips.css', $deps = array(), $ver = '1.0.0', $media = 'all');
+	wp_register_style( 'datepicker-css', WP_ADCENTER_PUBLIC_URL.'/css/ui-lightness/datepicker.css', '1.0.0' );
 	wp_enqueue_style('admin');
     wp_enqueue_style('tooltip');
     wp_enqueue_style('datepicker-css');
@@ -31,24 +35,24 @@ function wpadl_menu_function()
     define('wpAdCenter_litePluginURL',plugin_dir_url( __FILE__ ).'admin/js/');
 	
 
-	wp_register_script('jquery.validate.js', wpAdCenter_litePluginURL . 'jquery.validate.js');
+	wp_register_script('jquery.validate.js', WP_ADCENTER_PUBLIC_URL . 'js/jquery.validate.js');
 	wp_enqueue_script('jquery.validate.js');
 
-	wp_register_script('valid.js', wpAdCenter_litePluginURL . 'valid.js');
+	wp_register_script('valid.js', WP_ADCENTER_PUBLIC_URL . 'js/valid.js');
 	wp_enqueue_script('valid.js');
-	wp_register_script('jquery.tipTip.minified.js', wpAdCenter_litePluginURL . 'jquery.tipTip.minified.js');
+	wp_register_script('jquery.tipTip.minified.js', WP_ADCENTER_PUBLIC_URL . 'js/jquery.tipTip.minified.js');
 	
 	wp_enqueue_script('jquery.tipTip.minified.js');
 	
-	wp_register_script('date.js', wpAdCenter_litePluginURL . 'date.js');
+	wp_register_script('date.js', WP_ADCENTER_PUBLIC_URL . 'js/date.js');
 	wp_enqueue_script('date.js');
 
 	/*  Enqueue Chartjs */
-    wp_register_script('chartjs', wpAdCenter_litePluginURL . 'Chart.min.js');
+    wp_register_script('chartjs', WP_ADCENTER_PUBLIC_URL . 'js/Chart.min.js');
     wp_enqueue_script('chartjs');
 
 	/* Register our plugin page */
-	add_menu_page("WP Ad Center", "WP Ad Center", "administrator", "setting" , "wpadl_setting", plugins_url('images/wp-icon.png',__FILE__));
+	add_menu_page("WP Ad Center", "WP Ad Center", "administrator", "setting" , "wpadl_setting", WP_ADCENTER_ADMIN_URL.'images/wp-icon.png' );
 	add_submenu_page("setting", "Settings", "Settings", "administrator", "setting", "wpadl_setting");
 	add_submenu_page("setting", "AdZones", "Ad Zones", "administrator", "adzones", "wpadl_adzones");
 	add_submenu_page("setting", "Packages", "Packages", "administrator", "packages", "wpadl_package");
@@ -87,7 +91,7 @@ function wpadl_setting()
 		echo '<div class="updated fade" style="color:red"><p><b>Data Updated successfully.</b></p></div>'; 
 		
 	}
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'setting.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-setting.php');
 }
 function wpadl_advertiser()
 {	
@@ -126,7 +130,7 @@ function wpadl_advertiser()
 			echo '<div class="updated fade" style="color:red"><p><b>Advertiser Name Already Exist.</b></p></div>';
 		}
 	}
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'advertisers.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-advertisers.php');
 }
 
 
@@ -177,7 +181,7 @@ function wpadl_campaign()
 		}
 	}
 	
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'campaigns.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-campaigns.php');
 }
 function wpadl_banner()
 { 
@@ -317,7 +321,7 @@ if ( isset($_POST['edit']) )
 	}
 	
 	
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'banners.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-banners.php');
 }
 
 function wpadl_adzones()
@@ -390,7 +394,7 @@ $img = '';
 		}
 	}
 	
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'adzones.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-adzones.php');
 }
 function wpadl_package()
 {	
@@ -434,17 +438,17 @@ function wpadl_package()
 		
 	}
 	
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'packages.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-packages.php');
 }
 
 function wpadl_statistics()
 {
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'statistics.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-statistics.php');
 }
 
 function wpadl_status()
 {
-	include(WP_ADCENTER_LITE_PLUGIN_DIR.'clientStatus.php');
+	include(WP_ADCENTER_ADMIN_DIR.'partials/wpadcenter-lite-admin-clientStatus.php');
 }
 
 
@@ -500,7 +504,7 @@ function wpadl_displayAdzoneFunction($atribute,$content=null) //Function For The
 
 function wpadl_clickOnBanner()
 {	
-	if ( isset($_GET['move_to']) ){ require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'redirect.php');}
+	if ( isset($_GET['move_to']) ){ require_once(WP_ADCENTER_ADMIN_DIR.'partials/redirect.php');}
 }
 
 
@@ -851,9 +855,9 @@ function wpadl_createtables()
 function wpadl_loadJqueryForTheme() {
     
     global $pluginUrl;
-	wp_register_script($handle = 'validjs', $src = plugins_url('js/valid.js', __FILE__), $deps = array(), $ver = '1.5.0', $media = 'all');
-	wp_register_script($handle = 'validatejs', $src = plugins_url('js/jquery.validate.js', __FILE__), $deps = array(), $ver = '1.5.0', $media = 'all');
-	wp_register_script('sliderjs',plugins_url('js/slider.js', __FILE__),array( 'jquery' ), $ver = '1.5.0');
+	wp_register_script( 'validjs', WP_ADCENTER_PUBLIC_URL.'js/valid.js', $deps = array(), $ver = '1.5.0', $media = 'all');
+	wp_register_script( 'validatejs', WP_ADCENTER_PUBLIC_URL.'js/jquery.validate.js', $deps = array(), $ver = '1.5.0', $media = 'all');
+	wp_register_script('sliderjs',WP_ADCENTER_PUBLIC_URL.'js/slider.js',array( 'jquery' ), $ver = '1.5.0');
 
 	wp_enqueue_script( 'sliderjs');
 	wp_enqueue_script( 'validatejs');
@@ -1105,8 +1109,8 @@ function wpadl_force_deactivation(){
 	else{
 		// else include the files
 		add_action('admin_menu', 'wpadl_menu_function');
-		require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'functions.php');
-		require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'adzone_display.php');
+		require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'includes/wpadcenter-lite-functions.php');
+		require_once(WP_ADCENTER_PUBLIC_DIR.'partials/wpadcenter-lite-adzone_display.php');
 		add_action('init', 'wpadl_loadJqueryForTheme');
 	}
 }
