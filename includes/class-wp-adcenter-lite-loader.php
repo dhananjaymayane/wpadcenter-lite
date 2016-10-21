@@ -19,16 +19,16 @@ function wpadl_menu_function()
 {
 	// Create Menu
 	/*	Register and Enqueue Styles/Scripts	*/
-   	wp_register_style($handle = 'admin', $src = plugins_url('admin/css/admin.css', __FILE__), $deps = array(), $ver = '1.0.0', $media = 'all');
-	wp_register_style($handle = 'tooltip', $src = plugins_url('admin/css/tooltips.css', __FILE__), $deps = array(), $ver = '1.0.0', $media = 'all');
-	wp_register_style( 'datepicker-css', plugins_url('admin/css/ui-lightness/datepicker.css',__FILE__), '1.0.0' );
+   	wp_register_style($handle = 'admin', $src = plugins_url('css/admin.css', __FILE__), $deps = array(), $ver = '1.0.0', $media = 'all');
+	wp_register_style($handle = 'tooltip', $src = plugins_url('css/tooltips.css', __FILE__), $deps = array(), $ver = '1.0.0', $media = 'all');
+	wp_register_style( 'datepicker-css', plugins_url('css/ui-lightness/datepicker.css',__FILE__), '1.0.0' );
 	wp_enqueue_style('admin');
     wp_enqueue_style('tooltip');
     wp_enqueue_style('datepicker-css');
 
     wp_enqueue_script('jquery-ui-datepicker');	//enqueue WP default DatepickerJS
 
-    define('wpAdCenter_litePluginURL',plugin_dir_url( __FILE__ ).'admin/js/');
+    define('wpAdCenter_litePluginURL',plugin_dir_url( __FILE__ ).'js/');
 	
 
 	wp_register_script('jquery.validate.js', wpAdCenter_litePluginURL . 'jquery.validate.js');
