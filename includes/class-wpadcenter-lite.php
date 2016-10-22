@@ -117,7 +117,7 @@ class WPAdcenter_Lite {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once WP_ADCENTER_LITE_PLUGIN_DIR . 'public/class-plugin-name-public.php';
+		require_once WP_ADCENTER_LITE_PLUGIN_DIR . 'public/class-wpadcenter-lite-public.php';
 
 		$this->loader = new WPAdcenter_Lite_Loader();
 
@@ -169,7 +169,8 @@ class WPAdcenter_Lite {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-
+                $this->loader->add_action('wp_loaded',$plugin_public,'wpadl_clickOnBanner');
+                $this->loader->add_action( 'plugins_loaded',$plugin_public, 'wpadl_force_deactivation' );
 	}
 
 	/**
