@@ -1,12 +1,12 @@
-<?php 
+<?php
 /**
-Plugin Name: WP AdCenter Lite
-Version: 1.2
-Plugin URI: http://wpadcenter.com
-Description: Advertising management plugin for WordPress
-Author:  WPEka Team
-Author URI: http://club.wpeka.com
-**/
+ Plugin Name: WP AdCenter Lite
+ Version: 1.2
+ Plugin URI: http://wpadcenter.com
+ Description: Advertising management plugin for WordPress
+ Author:  WPEka Team
+ Author URI: http://club.wpeka.com
+ **/
 
 //	**** Require functions and display zone files ****//
 define( 'WP_ADCENTER_LITE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
@@ -21,56 +21,56 @@ require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'includes/wpadcenter-lite-ajax.php');
 require_once(WP_ADCENTER_LITE_PLUGIN_DIR.'plugin-name.php');
 function wpadl_menu_function()
 {
-	
+
 }
 
-///////////////FOR MENU END//////////////////							
+///////////////FOR MENU END//////////////////
 
 /*
-*FUNCTION FOR  DISPLAY AD ZONE
-*/
+ *FUNCTION FOR  DISPLAY AD ZONE
+ */
 function wpadl_displayAdzone($id)
-{	
+{
 	global $wpdb, $current_user;
 
-	$res = wpadl_totalZones( "WHERE id = '".$id."' LIMIT 1" );	
+	$res = wpadl_totalZones( "WHERE id = '".$id."' LIMIT 1" );
 
-	$ads = $wpdb->get_results("SELECT ban.*, ad_ban.adzone_id, camp.status FROM " . $wpdb->prefix . "banner ban,  " . $wpdb->prefix . "adv_banner ad_ban," . $wpdb->prefix . "campaign camp WHERE  
+	$ads = $wpdb->get_results("SELECT ban.*, ad_ban.adzone_id, camp.status FROM " . $wpdb->prefix . "banner ban,  " . $wpdb->prefix . "adv_banner ad_ban," . $wpdb->prefix . "campaign camp WHERE
 			ad_ban.banner_id = ban.id AND   ad_ban.adzone_id = '".$id."' AND   camp.advertiser_id = ban.advertiser_id AND  camp.id = ad_ban.campaign_id AND   camp.status = 1   ORDER BY RAND()");
-	
-	
+
+
 	$size = explode( 'x', $res[0]->size );
 
 	/*
-	*	Code Commented - Was increasing Impression count on plugin load
-	*/
+	 *	Code Commented - Was increasing Impression count on plugin load
+	 */
 
 	/*foreach ($ads as $ad) {
-	  Impression( $ad );
-	}*/
-		
+	 Impression( $ad );
+	 }*/
+
 	$con = wpadl_displaySingle($id,$res,$ads,$size);
-	
+
 	return $con;
 
 }
 
 function wpadl_displayAdzoneFunction($atribute,$content=null) //Function For The Creation Of Short Code
 {
-   	extract( shortcode_atts( array('id' => 1), $atribute ) ); return wpadl_displayAdzone( esc_attr($id) );
+	extract( shortcode_atts( array('id' => 1), $atribute ) ); return wpadl_displayAdzone( esc_attr($id) );
 }
 
 // Function For Redirecting To The Link Url
 
 function wpadl_clickOnBanner()
-{	
+{
 	if ( isset($_GET['move_to']) ){ require_once(WP_ADCENTER_ADMIN_DIR.'partials/redirect.php');}
 }
 
 
 function wpadl_showCampaignName()
-{	
-?>
+{
+	?>
 <script type="text/javascript">
 var imgURL = "<?php echo plugins_url('images/',__FILE__);?>";
 
@@ -214,48 +214,48 @@ function wpadl_delete_Adv(id,name,val,trid)
 }
 
 </script>
-<?php
+	<?php
 }
 
 function wpadl_createtables()
-{   
+{
 	global $wpdb;
 
-	$table_advertisers = $wpdb->prefix . "advertiser";          ///////////      Advertiser Table  ///////////// 
+	$table_advertisers = $wpdb->prefix . "advertiser";          ///////////      Advertiser Table  /////////////
 	if($wpdb->get_var("show tables like '$table_advertisers'") != $table_advertisers) {
-	
-	$sql_advertisers = "CREATE TABLE " . $table_advertisers . " (
+
+		$sql_advertisers = "CREATE TABLE " . $table_advertisers . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 	    name varchar(200) NOT NULL,
 	    email varchar(200) NOT NULL,
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_advertisers); }
-	
-	
-	//$table_setting =$wpdb->prefix . "adsetting";
-	
-	$table_setting = $wpdb->prefix . "adsetting";          ///////////      Setting Table added new column for geolocation by Rajashri///////////// 
-	
-	if($wpdb->get_var("show tables like '$table_setting'") != $table_setting) 
-	{
-		$sql_setting = "CREATE TABLE " . $table_setting . " (
+
+		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+		dbDelta($sql_advertisers); }
+
+
+		//$table_setting =$wpdb->prefix . "adsetting";
+
+		$table_setting = $wpdb->prefix . "adsetting";          ///////////      Setting Table added new column for geolocation by Rajashri/////////////
+
+		if($wpdb->get_var("show tables like '$table_setting'") != $table_setting)
+		{
+			$sql_setting = "CREATE TABLE " . $table_setting . " (
 		id int(11) DEFAULT  NULL,
 		emailPaypal varchar(200) DEFAULT NULL,
 		currency varchar(200) DEFAULT NULL,
 		adcenterGeolocation varchar(100) DEFAULT NULL,			
 		PRIMARY KEY (`id`));";
-	
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql_setting); 
-	}
-	
-	$table_campaign = $wpdb->prefix . "campaign";          ///////////      Campaign table  added new column for geolocation by Rajashri/////////////
-	if($wpdb->get_var("show tables like '$table_campaign'") != $table_campaign) {
-	
-	$sql_campaigns = "CREATE TABLE " . $table_campaign . " (
+
+			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			dbDelta($sql_setting);
+		}
+
+		$table_campaign = $wpdb->prefix . "campaign";          ///////////      Campaign table  added new column for geolocation by Rajashri/////////////
+		if($wpdb->get_var("show tables like '$table_campaign'") != $table_campaign) {
+
+			$sql_campaigns = "CREATE TABLE " . $table_campaign . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 	    advertiser_id mediumint(9) NOT NULL,
 	    name varchar(200) NOT NULL,
@@ -265,15 +265,15 @@ function wpadl_createtables()
 		user_id int(11) DEFAULT NULL,
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_campaigns); }
 
-	
-	$table_banner = $wpdb->prefix . "banner";          ///////////      Banner table  /////////////
-	if($wpdb->get_var("show tables like '$table_banner'") != $table_banner) {
-	
-	$sql_banner = "CREATE TABLE " . $table_banner . " (
+			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+			dbDelta($sql_campaigns); }
+
+
+			$table_banner = $wpdb->prefix . "banner";          ///////////      Banner table  /////////////
+			if($wpdb->get_var("show tables like '$table_banner'") != $table_banner) {
+
+				$sql_banner = "CREATE TABLE " . $table_banner . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 	    advertiser_id mediumint(9) NOT NULL,
 	    campaign_id mediumint(9) NOT NULL,
@@ -287,15 +287,15 @@ function wpadl_createtables()
 		adzone varchar(200),
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_banner); }
-	
-	
-	$table_zone = $wpdb->prefix . "adzone";          			///////////      Adzone table  /////////////
-	if($wpdb->get_var("show tables like '$table_zone'") != $table_zone) {
-	
-	$sql_zones = "CREATE TABLE " . $table_zone . " (
+
+				require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+				dbDelta($sql_banner); }
+
+
+				$table_zone = $wpdb->prefix . "adzone";          			///////////      Adzone table  /////////////
+				if($wpdb->get_var("show tables like '$table_zone'") != $table_zone) {
+
+					$sql_zones = "CREATE TABLE " . $table_zone . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 	    name varchar(200) NOT NULL,
 	    size varchar(100) NOT NULL,
@@ -308,33 +308,33 @@ function wpadl_createtables()
 		default_banner varchar(300),
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_zones); 
-	}
-	else {
-		$sql_default_banner = "SHOW COLUMNS FROM ".$table_zone." LIKE 'default_banner'";
-		if(!$wpdb->get_var($sql_default_banner)){
-			$sql2='ALTER TABLE '.$table_zone.' ADD default_banner varchar(300)';
-			$wpdb->query($sql2);
-		}
-	}
-	
-	if($wpdb->get_var("show tables like '$table_zone'") == $table_zone) {
-	
-	$sql_zones_alter = "CREATE TABLE " . $table_zone . " (
+
+					require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+					dbDelta($sql_zones);
+				}
+				else {
+					$sql_default_banner = "SHOW COLUMNS FROM ".$table_zone." LIKE 'default_banner'";
+					if(!$wpdb->get_var($sql_default_banner)){
+						$sql2='ALTER TABLE '.$table_zone.' ADD default_banner varchar(300)';
+						$wpdb->query($sql2);
+					}
+				}
+
+				if($wpdb->get_var("show tables like '$table_zone'") == $table_zone) {
+
+					$sql_zones_alter = "CREATE TABLE " . $table_zone . " (
 		showsignuplink int(11) NOT NULL,                 
         signuplink text
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_zones_alter); }
-	
-	
-	$table_showbanner = $wpdb->prefix . "adv_banner";          ///////////      Ad Banner table  /////////////
-	if($wpdb->get_var("show tables like '$table_showbanner'") != $table_showbanner) {
-	
-	$sql_showbanner = "CREATE TABLE " . $table_showbanner . " (
+
+					require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+					dbDelta($sql_zones_alter); }
+
+
+					$table_showbanner = $wpdb->prefix . "adv_banner";          ///////////      Ad Banner table  /////////////
+					if($wpdb->get_var("show tables like '$table_showbanner'") != $table_showbanner) {
+
+						$sql_showbanner = "CREATE TABLE " . $table_showbanner . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 	    advertiser_id mediumint(9) NOT NULL,
 		campaign_id mediumint(9) NOT NULL,
@@ -342,14 +342,14 @@ function wpadl_createtables()
 		adzone_id mediumint(9) NOT NULL,
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_showbanner); }
-	
-	$table_package = $wpdb->prefix ."adpackage";          ///////////      Ad Package table  /////////////
-	if($wpdb->get_var("show tables like '$table_package'") != $table_package) {
-	
-	$sql_package = "CREATE TABLE " .$table_package . " (
+
+						require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+						dbDelta($sql_showbanner); }
+
+						$table_package = $wpdb->prefix ."adpackage";          ///////////      Ad Package table  /////////////
+						if($wpdb->get_var("show tables like '$table_package'") != $table_package) {
+
+							$sql_package = "CREATE TABLE " .$table_package . " (
 		id mediumint(9) NOT NULL AUTO_INCREMENT,
 	    name varchar(255) NOT NULL,
 		adzone_id mediumint(9) NOT NULL,
@@ -360,19 +360,19 @@ function wpadl_createtables()
 		impressions varchar(255),
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_package); }
-	
-	$table_stats = $wpdb->prefix ."adstats";          ///////////      Stats table  /////////////
-	//comented the below if condition to stop table being deleted after activation of plugin. ( by Prachi) 
-	/*if($wpdb->get_var("show tables like '$table_stats'") == $table_stats) 
-	{
-	$wpdb->query("drop table $table_stats ");
-	}*/
-	if($wpdb->get_var("show tables like '$table_stats'") != $table_stats) {
-	
-	$sql_stats = "CREATE TABLE " .$table_stats . " (
+
+							require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+							dbDelta($sql_package); }
+
+							$table_stats = $wpdb->prefix ."adstats";          ///////////      Stats table  /////////////
+							//comented the below if condition to stop table being deleted after activation of plugin. ( by Prachi)
+							/*if($wpdb->get_var("show tables like '$table_stats'") == $table_stats)
+							 {
+							 $wpdb->query("drop table $table_stats ");
+							 }*/
+							if($wpdb->get_var("show tables like '$table_stats'") != $table_stats) {
+
+								$sql_stats = "CREATE TABLE " .$table_stats . " (
 		id int(11) NOT NULL AUTO_INCREMENT,
 	    advertiser_id int(11) DEFAULT NULL,
 		campaign_id int(11) DEFAULT NULL,
@@ -382,15 +382,15 @@ function wpadl_createtables()
               `impressions` int(11) DEFAULT NULL,  
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_stats); }
-	
-	
-	$table_aduserzones = $wpdb->prefix ."aduserzones";          ///////////      Aduserzones table  ///////inserted country coulmn by Rajashri//////
-	if($wpdb->get_var("show tables like '$table_aduserzones'") != $table_aduserzones) {
-	
-	$sql_aduserzones = "CREATE TABLE " .$table_aduserzones . " (
+
+								require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+								dbDelta($sql_stats); }
+
+
+								$table_aduserzones = $wpdb->prefix ."aduserzones";          ///////////      Aduserzones table  ///////inserted country coulmn by Rajashri//////
+								if($wpdb->get_var("show tables like '$table_aduserzones'") != $table_aduserzones) {
+
+									$sql_aduserzones = "CREATE TABLE " .$table_aduserzones . " (
 		id int(11) NOT NULL AUTO_INCREMENT,
 	    user_id int(11) DEFAULT NULL,
 		selected_zone varchar(255) DEFAULT NULL,
@@ -405,16 +405,16 @@ function wpadl_createtables()
 		approved int(11) DEFAULT NULL,
 	    UNIQUE KEY id (id)
 	);";
-	
-	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	dbDelta($sql_aduserzones ); }
+
+									require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+									dbDelta($sql_aduserzones ); }
 
 }
 
 // This function loads JQuery in our theme
 function wpadl_loadJqueryForTheme() {
-    
-    global $pluginUrl;
+
+	global $pluginUrl;
 	wp_register_script( 'validjs', WP_ADCENTER_PUBLIC_URL.'js/valid.js', $deps = array(), $ver = '1.5.0', $media = 'all');
 	wp_register_script( 'validatejs', WP_ADCENTER_PUBLIC_URL.'js/jquery.validate.js', $deps = array(), $ver = '1.5.0', $media = 'all');
 	wp_register_script('sliderjs',WP_ADCENTER_PUBLIC_URL.'js/slider.js',array( 'jquery' ), $ver = '1.5.0');
@@ -425,76 +425,79 @@ function wpadl_loadJqueryForTheme() {
 	wpadl_checkFinished();
 	wpadl_impressionEndDate();
 
-}    
+}
 
 function wpadl_loadWidgets() {
-    
+
 	register_widget('ADWidget_lite');
 }
 
 if( !class_exists('ADWidget_lite')){
 
-class ADWidget_lite extends WP_Widget {
-    function ADWidget_lite() {
-        //Constructor
-        parent::__construct(false, $name = 'WP Adcenter', array('description' => 'Widget For AdCenter Plugin.'));
-    }
-	
-	
-    function widget($args, $instance) {
-        // outputs the content of the widget
-        extract( $args );
-        $category = (is_numeric($instance['category']) ? (int)$instance['category'] : '');
-        $title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
-       
-        echo $before_widget;
-        if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
-         if ( $category )
+	class ADWidget_lite extends WP_Widget {
+		function ADWidget_lite() {
+			//Constructor
+			parent::__construct(false, $name = 'WP Adcenter', array('description' => 'Widget For AdCenter Plugin.'));
+		}
+
+
+		function widget($args, $instance) {
+			// outputs the content of the widget
+			extract( $args );
+			$category = (is_numeric($instance['category']) ? (int)$instance['category'] : '');
+			$title = empty($instance['title']) ? ' ' : apply_filters('widget_title', $instance['title']);
+			 
+			echo $before_widget;
+			if ( !empty( $title ) ) { echo $before_title . $title . $after_title; };
+			if ( $category )
 			{if( function_exists( 'wpadl_displayAdzone' ) )    echo wpadl_displayAdzone( $category );}
-			
-		/* After widget (defined by themes). */
-		echo $after_widget;
-    }
+				
+			/* After widget (defined by themes). */
+			echo $after_widget;
+		}
 
-    function update($new_instance, $old_instance) {
-        //update and save the widget
+		function update($new_instance, $old_instance) {
+			//update and save the widget
 
-        return $new_instance;
-    }
-    function form($instance) {
-        //widgetform in backend
-		global $wpdb;
-		$totalZones = wpadl_totalZones('ORDER BY name ASC');
-		
-        $category = !empty($instance) ? esc_attr($instance['category']):'';
-        
-        $title = !empty($instance) ? strip_tags($instance['title']):'';
-       // Get the existing categories and build a simple select dropdown for the user.
-        $categories = $totalZones;
-        $cat_options = array();
-        $cat_options[] = '<option value="BLANK">Select one...</option>';
-        for($i=0;$i<count($categories);$i++) {
-            $selected = $category === $categories[$i]->id ? ' selected="selected"' : '';
-            $cat_options[] = '<option value="' . $categories[$i]->id .'"' . $selected . '>' . $categories[$i]->name . '</option>';
-        }
-        ?>
-          <p>
+			return $new_instance;
+		}
+		function form($instance) {
+			//widgetform in backend
+			global $wpdb;
+			$totalZones = wpadl_totalZones('ORDER BY name ASC');
 
-              <label for="<?php echo $this->get_field_id('title'); ?>">Title: </label>
-              <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $instance['title']; ?>" /></p>
-            <p>
-                <label for="<?php echo $this->get_field_id('category'); ?>">
-                    <?php _e('Select Ad Zone:'); ?>
-                </label>
-                <select id="<?php echo $this->get_field_id('category'); ?>" class="widefat" name="<?php echo $this->get_field_name('category'); ?>">
-                    <?php echo implode('', $cat_options); ?>
-                </select>
-            </p>
-            
-            <?php }
+			$category = !empty($instance) ? esc_attr($instance['category']):'';
+
+			$title = !empty($instance) ? strip_tags($instance['title']):'';
+			// Get the existing categories and build a simple select dropdown for the user.
+			$categories = $totalZones;
+			$cat_options = array();
+			$cat_options[] = '<option value="BLANK">Select one...</option>';
+			for($i=0;$i<count($categories);$i++) {
+				$selected = $category === $categories[$i]->id ? ' selected="selected"' : '';
+				$cat_options[] = '<option value="' . $categories[$i]->id .'"' . $selected . '>' . $categories[$i]->name . '</option>';
+			}
+			?>
+<p>
+
+	<label for="<?php echo $this->get_field_id('title'); ?>">Title: </label>
+	<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+		name="<?php echo $this->get_field_name('title'); ?>" type="text"
+		value="<?php echo $instance['title']; ?>" />
+</p>
+<p>
+	<label for="<?php echo $this->get_field_id('category'); ?>"> <?php _e('Select Ad Zone:'); ?>
+	</label> <select id="<?php echo $this->get_field_id('category'); ?>"
+		class="widefat"
+		name="<?php echo $this->get_field_name('category'); ?>">
+		<?php echo implode('', $cat_options); ?>
+	</select>
+</p>
+
+		<?php }
 	}
 }
-  
+
 
 add_action('wp_loaded','wpadl_clickOnBanner');
 register_activation_hook( __FILE__, 'wpadl_createtables');
@@ -503,7 +506,7 @@ register_activation_hook( __FILE__, 'wpadl_createtables');
 register_activation_hook( __FILE__, 'wpadcenter_activation_lite' );
 /**
  * On activation, set a time, frequency and name of an action hook to be scheduled.
-*/
+ */
 function wpadcenter_activation_lite() {
 	wp_schedule_event( time(), 'daily', 'wpadcenter_daily_event_hook' );
 }
@@ -514,11 +517,11 @@ function wpadcenter_activation_lite() {
 add_action( 'wpadcenter_daily_event_hook', 'wpadcenter_do_this_daily_lite' );
 /**
  * On the scheduled action hook, run the function.
-*/
+ */
 function wpadcenter_do_this_daily_lite() {
 	// do this event daily
 	global $wpdb;
-	
+
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 	$headers .= 'Content-Transfer_Encoding: 7bit' . "\r\n";
@@ -527,7 +530,7 @@ function wpadcenter_do_this_daily_lite() {
 
 		$headers .= 'From: '.get_option('adcenterName').' <'.get_option('adcenterEmail').'>' . "\r\n";
 	}
-	else 
+	else
 	{
 		$headers .= 'From: Adcenter Admin <'.get_option( "admin_email" ).'>'."\r\n";
 	}
@@ -557,7 +560,7 @@ function wpadcenter_do_this_daily_lite() {
 			$message.='<p>Days Remaining : '.$current_diff.'</p>';
 			if(get_user_meta($campaign_list[$i]->user_id,"wpadcenter_notification",true)=="1"){
 				if(get_user_meta($campaign_list[$i]->user_id,"wpadcenter_notification_mail",true)=="0"){
-			wp_mail($campaign_list[$i]->adv_email, "Reminder Email From AdCenter", $message,$headers);
+					wp_mail($campaign_list[$i]->adv_email, "Reminder Email From AdCenter", $message,$headers);
 					update_user_meta($campaign_list[$i]->user_id, "wpadcenter_notification_mail", "1");
 					sleep(5);
 				}
@@ -580,7 +583,7 @@ function wpadcenter_do_this_daily_lite() {
 			}
 		}
 	}
-	$impression_package_campaign_list=$wpdb->get_results("SELECT adsts.id, 
+	$impression_package_campaign_list=$wpdb->get_results("SELECT adsts.id,
 				adsts.advertiser_id, adsts.campaign_id, adsts.banner_id, 
 				adsts.date, adsts.clicks, adsts.impressions,adv.name as adv_name, 
 				adv.email, camp.name as cname,camp.start_date, camp.end_date, 
@@ -642,25 +645,25 @@ function wpadcenter_do_this_daily_lite() {
 register_deactivation_hook( __FILE__, 'wpadcenter_deactivation_lite' );
 /**
  * On deactivation, remove all functions from the scheduled action hook.
-*/
+ */
 function wpadcenter_deactivation_lite() {
 	wp_clear_scheduled_hook( 'wpadcenter_daily_event_hook' );
 }
 
 
 add_action('admin_head', 'wpadl_showCampaignName');
-add_shortcode('displayAdzone', 'wpadl_displayAdzoneFunction'); 
+add_shortcode('displayAdzone', 'wpadl_displayAdzoneFunction');
 
 add_action( 'widgets_init', 'wpadl_loadWidgets' );
 
-/*	Check if Pro Version is Active 	
-*	'plugins_loaded' hooks gets called when plugin loads
-*/
+/*	Check if Pro Version is Active
+ *	'plugins_loaded' hooks gets called when plugin loads
+ */
 
 add_action( 'plugins_loaded', 'wpadl_force_deactivation' );
 
 function wpadl_force_deactivation(){
-	
+
 	if(defined('WP_ADCENTER_PLUGIN_DIR')){
 
 		// if plugin is found active then display errors message

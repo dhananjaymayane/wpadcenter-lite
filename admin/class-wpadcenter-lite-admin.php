@@ -58,8 +58,8 @@ class WPAdcenter_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
-
+	public function enqueue_styles( $hook ) {
+        
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
@@ -71,6 +71,7 @@ class WPAdcenter_Lite_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		
 		wp_enqueue_style('admin', WP_ADCENTER_ADMIN_URL.'css/wpadcenter-lite-admin.css', '', '', $media = 'all');
 		wp_enqueue_style('tooltip', WP_ADCENTER_ADMIN_URL.'css/tooltips.css', '', '', $media = 'all');
 		wp_enqueue_style( 'datepicker-css', WP_ADCENTER_ADMIN_URL.'/css/ui-lightness/datepicker.css' );
@@ -85,8 +86,8 @@ class WPAdcenter_Lite_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
-
+	public function enqueue_scripts( $hook ) {
+		
 		/**
 		 * This function is provided for demonstration purposes only.
 		 *
