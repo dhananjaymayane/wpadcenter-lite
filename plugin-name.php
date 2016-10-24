@@ -10,7 +10,7 @@ if ( ! defined( 'WPINC' ) ) {
  * This action is documented in includes/class-plugin-name-activator.php
  */
 function activate_wpadcenter_lite() {
-	require_once WP_ADCENTER_LITE_PLUGIN_DIR . 'includes/class-plugin-name-activator.php';
+	require_once WP_ADCENTER_LITE_PLUGIN_DIR . 'includes/class-wpadcenter-lite-activator.php';
 	WPAdcenter_Lite_Activator::activate();
 }
 
