@@ -4,7 +4,7 @@
 		<span class="left"><img src="<?php echo WP_ADCENTER_ADMIN_URL.'images/logo.gif';?>" width="203" height="58" alt="wp adcenter" /></span>
 		<h2>Advertiser</h2>
 	</div>
-	<?php if(!isset($_REQUEST['mode']) || $_REQUEST['mode']=="") {?>
+	<?php if( !isset($_REQUEST['mode']) || $_REQUEST['mode']=="" ) {?>
 	<div class="wpa-section clearfix">
 		<h1 class="clearfix">
 		<span class="close-icon" id="minus-btn"><span class="heading" style="margin-left:35px;">Add a New Advertiser</span></span>

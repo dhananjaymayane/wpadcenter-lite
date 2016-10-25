@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * The admin menu functionality of the plugin.
+ *
+ * Defines the functions that creates the settings pages 
+ * in admin.
+ *
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/admin
+ */
 
 if( !class_exists( 'WPAcenter_Admin_Menu' ) ){
 

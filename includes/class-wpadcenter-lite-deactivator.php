@@ -30,7 +30,10 @@ class WPAdcenter_Lite_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-
+		/**
+ 		* On deactivation, remove all functions from the scheduled action hook.
+ 		*/
+		wp_clear_scheduled_hook( 'wpadcenter_daily_event_hook' );
 	}
 
 }

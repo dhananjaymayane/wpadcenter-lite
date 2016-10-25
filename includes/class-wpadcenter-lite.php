@@ -153,6 +153,8 @@ class WPAdcenter_Lite {
 		$this->loader->add_action( 'admin_menu', $wpadcenter_lite_admin, 'admin_menu' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $wpadcenter_lite_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $wpadcenter_lite_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'admin_head', $wpadcenter_lite_admin, 'wpadl_show_campaign_name' );
+		$this->loader->add_action( 'widgets_init', $wpadcenter_lite_admin, 'wpadl_load_widgets' );
 
 	}
 
@@ -169,8 +171,8 @@ class WPAdcenter_Lite {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-                $this->loader->add_action('wp_loaded',$plugin_public,'wpadl_clickOnBanner');
-                $this->loader->add_action( 'plugins_loaded',$plugin_public, 'wpadl_force_deactivation' );
+        $this->loader->add_action('wp_loaded',$plugin_public,'wpadl_clickOnBanner');
+        $this->loader->add_action( 'plugins_loaded',$plugin_public, 'wpadl_force_deactivation' );
 	}
 
 	/**
