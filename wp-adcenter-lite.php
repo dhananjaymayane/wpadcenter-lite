@@ -48,6 +48,7 @@ function activate_wpadcenter_lite() {
 	/**
 	 * On activation, set a time, frequency and name of an action hook to be scheduled.
  	*/
+
 	wp_schedule_event( time(), 'daily', 'wpadcenter_daily_event_hook' );
 	require_once WP_ADCENTER_LITE_PLUGIN_DIR . 'includes/class-wpadcenter-lite-activator.php';
 	WPAdcenter_Lite_Activator::activate();

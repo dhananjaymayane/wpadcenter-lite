@@ -20,7 +20,7 @@
  * @subpackage Plugin_Name/includes
  * @author     Your Name <email@example.com>
  */
-class WPAcenter_Lite_Activator {
+class WPAdcenter_Lite_Activator {
 
 	/**
 	 * Short Description. (use period)
