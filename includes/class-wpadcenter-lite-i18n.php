@@ -9,8 +9,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/includes
  */
 
 /**
@@ -20,9 +20,9 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/includes
+ * @author     Ranjith Nair 
  */
 class WPAdcenter_Lite_i18n {
 

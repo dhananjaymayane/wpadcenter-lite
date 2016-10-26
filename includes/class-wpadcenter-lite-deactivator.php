@@ -6,8 +6,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/includes
  */
 
 /**
@@ -16,9 +16,9 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/includes
+ * @author     Ranjith Nair 
  */
 class WPAdcenter_Lite_Deactivator {
 

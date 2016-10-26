@@ -9,8 +9,8 @@
  * @link       http://example.com
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/includes
  */
 
 /**
@@ -23,9 +23,9 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    WPAdcenter_Lite
+ * @subpackage WPAdcenter_Lite/includes
+ * @author     Ranjith Nair 
  */
 class WPAdcenter_Lite {
 
@@ -35,7 +35,7 @@ class WPAdcenter_Lite {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Plugin_Name_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      WPAdcenter_Lite_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -83,10 +83,10 @@ class WPAdcenter_Lite {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Plugin_Name_Loader. Orchestrates the hooks of the plugin.
-	 * - Plugin_Name_i18n. Defines internationalization functionality.
-	 * - Plugin_Name_Admin. Defines all hooks for the admin area.
-	 * - Plugin_Name_Public. Defines all hooks for the public side of the site.
+	 * - WPAdcenter_Lite_Loader. Orchestrates the hooks of the plugin.
+	 * - WPAdcenter_Lite_i18n. Defines internationalization functionality.
+	 * - WPAdcenter_Lite_Admin. Defines all hooks for the admin area.
+	 * - WPAdcenter_Lite_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -126,7 +126,7 @@ class WPAdcenter_Lite {
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Plugin_Name_i18n class in order to set the domain and to register the hook
+	 * Uses the WPAdcenter_Lite_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -199,7 +199,7 @@ class WPAdcenter_Lite {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Plugin_Name_Loader    Orchestrates the hooks of the plugin.
+	 * @return    WPAdcenter_Lite_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;
